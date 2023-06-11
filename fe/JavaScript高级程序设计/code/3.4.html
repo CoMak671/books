@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据类型</title>
+  </head>
+  <body>
+    <!-- typeof -->
+    <script>
+      console.log(typeof undefined); // undefined
+      console.log(typeof null); // object 空对象的引用
+      console.log(typeof true); // boolean
+      console.log(typeof 1); // number
+      console.log(typeof "abc"); // string
+      console.log(typeof Symbol()); // symbol
+      console.log(typeof {}); // object
+    </script>
+    <!-- NaN -->
+    <script>
+      console.log(0 / 0); // NaN
+      console.log(5 / 0); // Infinity
+
+      console.log(NaN == NaN); // false
+      console.log(isNaN(NaN)); // true
+
+      console.log(isNaN(true)); // false
+      console.log(isNaN(1)); // false
+      console.log(isNaN("10")); // false
+      console.log(isNaN("blue")); // true
+    </script>
+    <!-- 数值转换 -->
+    <script>
+      console.log("数值转换 Number");
+      console.log(Number(true)); // 1
+      console.log(Number(null)); // 0
+      console.log(Number(undefined)); // NaN
+      console.log(Number("123")); // 123
+      console.log(Number("")); // 0
+      console.log(Number("Hello")); // NaN
+      console.log(Number({})); // NaN
+
+      console.log("数值转换 parseInt");
+      console.log(parseInt("")); // NaN
+      console.log(parseInt(" 123abc")); // 123
+    </script>
+    <!-- string -->
+    <script>
+      const text = "a \u03a3";
+      console.log(text.length);
+
+      console.log(`first line\nsecond line`);
+      console.log(String.raw`first line\nsecond line`);
+    </script>
+    <!-- Symbol -->
+    <script>
+      let fooSymbol = Symbol("foo");
+      let otherFooSymbol = Symbol("foo");
+      console.log(fooSymbol == otherFooSymbol); // false
+
+      let fooGlobalSymbol = Symbol.for("foo");
+      let otherFooGlobalSymbol = Symbol.for("foo");
+      console.log(fooGlobalSymbol === otherFooGlobalSymbol); // true
+
+      let localSymbol = Symbol("foo");
+      let globalSymbol = Symbol.for("foo");
+      console.log(localSymbol === globalSymbol); // false
+
+      let s = Symbol.for("foo");
+      console.log(Symbol.keyFor(s)); // foo
+
+      let s2 = Symbol("bar");
+      console.log(Symbol.keyFor(s2)); // undefined
+
+      let s1 = Symbol("foo");
+
+      let o = {
+        [s1]: "foo val",
+        [s2]: "bar val",
+        baz: "baz val",
+        qux: "qux val",
+      };
+      console.log(Object.getOwnPropertyNames(o)); // ['baz', 'qux']
+      console.log(Object.getOwnPropertySymbols(o)); // [Symbol(foo), Symbol(bar)]
+      console.log(Object.getOwnPropertyDescriptors(o)); // {baz: {…}, qux: {…}, Symbol(foo): {…}, Symbol(bar): {…}}
+      console.log(Reflect.ownKeys(o)); // ['baz', 'qux', Symbol(foo), Symbol(bar)]
+
+      function Foo() {}
+      let f = new Foo();
+      console.log(f instanceof Foo);  // 
+      console.log(Foo[Symbol.hasInstance](f)); // true
+
+      class Bar {}
+      let b = new Bar();
+      console.log(b instanceof Bar); // true
+      console.log(Bar[Symbol.hasInstance](b)); // true
+
+      class Baz extends Bar {
+        static [Symbol.hasInstance]() {
+          return false;
+        }
+      }
+      let baz = new Baz();
+      console.log(Bar[Symbol.hasInstance](baz)); // true
+      console.log(b instanceof Bar); // true
+      console.log(Baz[Symbol.hasInstance](baz)); // false
+      console.log(b instanceof Baz); // false
+
+      Symbol.iterator
+
+    </script>
+  </body>
+</html>

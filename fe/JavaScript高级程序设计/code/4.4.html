@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>内存管理</title>
+  </head>
+  <body>
+    <script>
+      function createPerson(name) {
+        let localPerson = new Object();
+        localPerson.name = name;
+        return localPerson;
+      }
+      let globalPerson = createPerson("Tom");
+
+      // 手动解除引用
+      globalPerson = null;
+    </script>
+    <!-- 隐藏类-新增属性 -->
+    <script>
+      // bad
+      {
+        function Article() {
+          this.title = "Article Title";
+        }
+        let a1 = new Article();
+        let a2 = new Article();
+        a2.author = "Tom";
+      }
+      // good
+      {
+        function Article(author) {
+          this.title = "Article Title";
+          this.author = author;
+        }
+        let a1 = new Article();
+        let a2 = new Article("Tom");
+      }
+    </script>
+    <!-- 隐藏类-删除属性 -->
+    <script>
+      // bad
+      {
+        function Article() {
+          this.title = "Inauguration Ceremony Features Kazoo Band";
+          this.author = "Jake";
+        }
+        let a1 = new Article();
+        let a2 = new Article();
+        delete a1.author;
+      }
+      // good
+      {
+        function Article() {
+          this.title = "Inauguration Ceremony Features Kazoo Band";
+          this.author = "Jake";
+        }
+        let a1 = new Article();
+        let a2 = new Article();
+        a1.author = null;
+      }
+    </script>
+    <!-- 内存泄漏-定时器 -->
+    <script>
+      let name = "Jake";
+      setInterval(() => {
+        console.log(name);
+      }, 100);
+    </script>
+    <!-- 内存泄漏-闭包 -->
+    <script>
+      let outer = function () {
+        let name = "Jake";
+        return function () {
+          return name;
+        };
+      };
+    </script>
+    <!-- 对象池 -->
+    <script>
+      // vectorPool 是已有的对象池
+      let v1 = vectorPool.allocate();
+      let v2 = vectorPool.allocate();
+      let v3 = vectorPool.allocate();
+      v1.x = 10;
+      v1.y = 5;
+      v2.x = -3;
+      v2.y = -6;
+      addVector(v1, v2, v3);
+      console.log([v3.x, v3.y]); // [7, -1]
+      vectorPool.free(v1);
+      vectorPool.free(v2);
+      vectorPool.free(v3);
+      // 如果对象有属性引用了其他对象
+      // 则这里也需要把这些属性设置为null v1 = null;
+      v2 = null;
+      v3 = null;
+    </script>
+  </body>
+</html>

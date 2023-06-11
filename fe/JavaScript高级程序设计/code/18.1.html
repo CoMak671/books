@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用requestAnimationFrame</title>
+  </head>
+  <body>
+    <div
+      id="animate-box"
+      style="width: 50px; height: 50px; background: orchid"
+      onclick='window.scrollTo({
+      top: 1000,
+      left: 0,
+      behavior: "smooth",
+    });'
+    ></div>
+    <div style="width: 50px; height: 1000px; background: orange"></div>
+    <script>
+      const element = document.getElementById("animate-box");
+      let start, previousTimeStamp;
+      let done = false;
+
+      function step(timeStamp) {
+        console.log("timeStamp", timeStamp);
+
+        if (start === undefined) {
+          start = timeStamp;
+        }
+        const elapsed = timeStamp - start;
+
+        if (previousTimeStamp !== timeStamp) {
+          // Math.min() is used here to make sure the element stops at exactly 200px
+          const count = Math.min(0.1 * elapsed, 200);
+          element.style.transform = `translateX(${count}px)`;
+          if (count === 200) done = true;
+        }
+
+        if (elapsed < 2000) {
+          // Stop the animation after 2 seconds
+          previousTimeStamp = timeStamp;
+          if (!done) {
+            window.requestAnimationFrame(step);
+          }
+        }
+      }
+
+      const requestId = window.requestAnimationFrame(step);
+    </script>
+    <!-- 节流 -->
+    <script>
+      // {
+      //   function expensiveOperation() {
+      //     console.log("expensiveOperation");
+      //   }
+      //   window.addEventListener("scroll", expensiveOperation);
+      // }
+      // {
+      //   let enqueue = false;
+      //   function expensiveOperation() {
+      //     console.log("expensiveOperation");
+      //     enqueue = false;
+      //   }
+      //   window.addEventListener("scroll", () => {
+      //     if (!enqueue) {
+      //       enqueue = true;
+      //       window.requestAnimationFrame(expensiveOperation);
+      //     }
+      //   });
+      // }
+      {
+        let enqueue = false;
+        function expensiveOperation() {
+          console.log("expensiveOperation");
+        }
+        window.addEventListener("scroll", () => {
+          if (!enqueue) {
+            enqueue = true;
+            window.requestAnimationFrame(expensiveOperation);
+            setTimeout(() => {
+              enqueue = false;
+            }, 100);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

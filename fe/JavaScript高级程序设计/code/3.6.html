@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>语句</title>
+  </head>
+  <body>
+    <!-- for-in/for-of -->
+    <script>
+      for (const key in window) {
+        document.writeln(key);
+      }
+      for (const el of [1, 2, 3, 4, 5]) {
+        document.writeln(el);
+      }
+    </script>
+    <!-- break -->
+    <script>
+      {
+        let num = 0;
+        outermost: for (let i = 0; i < 10; i++) {
+          for (let j = 0; j < 10; j++) {
+            if (i == 5 && j == 5) {
+              break outermost;
+            }
+            // console.log(i, j);
+            num++;
+          }
+        }
+        console.log(num); // 55
+      }
+      {
+        let num = 0;
+        outermost: for (let i = 0; i < 10; i++) {
+          for (let j = 0; j < 10; j++) {
+            if (i == 5 && j == 5) {
+              break;
+            }
+            // console.log(i, j);
+            num++;
+          }
+        }
+        console.log(num); // 95
+      }
+    </script>
+    <!-- continue -->
+    <script>
+      {
+        let num = 0;
+        outermost: for (let i = 0; i < 10; i++) {
+          for (let j = 0; j < 10; j++) {
+            if (i == 5 && j == 5) {
+              continue outermost;
+            }
+            // console.log(i, j);
+            num++;
+          }
+        }
+        console.log(num); // 95
+      }
+      {
+        let num = 0;
+        outermost: for (let i = 0; i < 10; i++) {
+          for (let j = 0; j < 10; j++) {
+            if (i == 5 && j == 5) {
+              continue;
+            }
+            // console.log(i, j);
+            num++;
+          }
+        }
+        console.log(num); // 99
+      }
+    </script>
+    <!-- switch -->
+    <script>
+      switch ("hello world") {
+        case "hello" + " world":
+          console.log("Greeting was found.");
+          break;
+        case "goodbye":
+          console.log("Closing was found.");
+          break;
+        default:
+          console.log("Unexpected message was found.");
+      }
+    </script>
+  </body>
+</html>

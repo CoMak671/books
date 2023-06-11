@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件流</title>
+  </head>
+  <body>
+    <div id="outer">
+      <p id="middle">
+        Click inside this paragraph.
+        <button id="inner" onclick="customEvent()">Click me!</button>
+      </p>
+    </div>
+    <script>
+      function customEvent() {
+        console.log("customEvent");
+      }
+
+      function handleClick(event) {
+        console.log(`Clicked element: ${event.target.id}`);
+        console.log(`Current target: ${event.currentTarget.id}`);
+        console.log("---");
+      }
+
+      const outer = document.getElementById("outer");
+      const middle = document.getElementById("middle");
+      const inner = document.getElementById("inner");
+
+      const useCapture = true;
+      outer.addEventListener("click", handleClick, useCapture);
+      middle.addEventListener("click", handleClick, useCapture);
+      inner.addEventListener("click", handleClick, useCapture);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>变量</title>
+  </head>
+  <body>
+    <!-- 全局变量 -->
+    <script>
+      function test() {
+        gmessage = "hi"; // 全局变量
+      }
+      test();
+      console.log(gmessage); // "hi"
+    </script>
+    <!-- var局部变量 -->
+    <script>
+      function test() {
+        var message = "hi"; // 局部变量
+      }
+      test();
+      console.log(message);
+    </script>
+    <!-- var声明提升 -->
+    <script>
+      function foo() {
+        console.log(age);
+        var age = 26;
+      }
+      foo(); // undefined
+    </script>
+    <!-- let块级作用域 -->
+    <script>
+      if (true) {
+        var name = "Matt";
+        console.log(name); // Matt
+      }
+      console.log(name); // Matt
+
+      if (true) {
+        let age = 26;
+        console.log(age); // 26
+      }
+      console.log(age); // ferenceError
+    </script>
+    <!-- 全局声明 -->
+    <script>
+      var name = "Matt";
+      console.log(window.name); // Matt
+
+      let age = 26;
+      console.log(window.age); // undefined
+    </script>
+    <!-- for循环 -->
+    <script>
+      for (var i = 0; i < 5; ++i) {
+        setTimeout(() => console.log(i), 0);
+      }
+      // 5 5 5 5 5
+      
+      for (let i = 0; i < 5; ++i) {
+        setTimeout(() => console.log(i), 0);
+      }
+      // 0 1 2 3 4
+    </script>
+  </body>
+</html>

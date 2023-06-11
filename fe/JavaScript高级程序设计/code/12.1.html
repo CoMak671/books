@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>window对象</title>
+    <!-- global作用域 -->
+    <script>
+      var age = 29;
+      var sayAage = () => console.log(this.age);
+
+      console.log(window.age);
+      sayAage();
+      window.sayAage();
+    </script>
+    <script>
+      function openWindow(params) {
+        sonWindow = window.open("", "", "width=400,height=400");
+        sonWindow.document.write(`
+        <head>
+          <title>子窗口</title>
+          <script>
+            function openWindow(params) {
+              grandsonWindow = window.open("", "", "width=400,height=400");
+              grandsonWindow.document.write("<p>这是孙窗口</p>");
+            }
+            function moveWindow(params) {
+              grandsonWindow.moveTo(0, 0);
+            }
+          <\/script>
+        </head>
+        <body>
+          <p>这是子窗口</p>
+          <button onclick="openWindow()">打开窗口</button>
+          <button onclick="moveWindow()">移动窗口</button>
+        </body>
+        `); 
+      }
+      function moveWindow(params) {
+        // 相对当前位置
+        // sonWindow.moveBy(100, 100);
+        // 绝对位置
+        sonWindow.moveTo(0, 0);
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="openWindow()">打开窗口</button>
+    <button onclick="moveWindow()">移动窗口</button>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原始值&引用值</title>
+  </head>
+  <body>
+    <!-- 动态属性 -->
+    <script>
+      let name1 = "Tom";
+      name1.age = 26;
+      console.log(name1.age); // undefined
+
+      let name2 = new String("Tom");
+      name2.age = 26;
+      console.log(name2.age); // 26
+    </script>
+    <!-- 复制值 -->
+    <script>
+      let num1 = 5;
+      let num2 = num1;
+      num1++;
+      console.log(num1); // 6
+      console.log(num2); // 5
+
+      let obj1 = new Object();
+      let obj2 = obj1;
+      obj1.name = "Tom";
+      console.log(obj2.name); // Tom
+    </script>
+    <!-- 传递参数 -->
+    <script>
+      {
+        function addTen(num) {
+          num += 10;
+          return num;
+        }
+        let count = 20;
+        let result = addTen(count);
+        console.log(count); // 20
+        console.log(result); // 30
+      }
+      {
+        function setName(obj) {
+          obj.name = "Tom";
+        }
+        let person = new Object();
+        setName(person);
+        console.log(person.name); // Tom
+      }
+      {
+        function setName(obj) {
+          obj.name = "Tom";
+          obj = new Object();
+          obj.name = "Lucy";
+          return obj;
+        }
+        let person = new Object();
+        let result = setName(person);
+        console.log(person.name); // Tom
+        console.log(result.name); // Lucy
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>执行上下文和作用域</title>
+  </head>
+  <body>
+    <!-- 作用域链增强 -->
+    <script>
+      const a = "a";
+      try {
+        const b = "b";
+        console.log("a in try", a);
+        throw new Error("Something bad happened.");
+      } catch (error) {
+        let err = error;
+        console.log("a in catch", a);
+        // console.log("b in catch", b);
+      }
+      console.log("xyz", err);
+    </script>
+    <!-- 变量声明 -->
+    <script>
+      const o2 = { name: "TTTTom" };
+      const o1 = Object.freeze({ name: "Tom", child: o2 });
+      o1.name = "Lucy";
+      o2.name = "Tommmmmm";
+      console.log(o1);
+    </script>
+  </body>
+</html>

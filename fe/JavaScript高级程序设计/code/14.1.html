@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>hello</div>
+      <div style="background-color: antiquewhite">
+        <span id="original">原始node</span>
+      </div>
+      <div style="background-color: blueviolet" id="modify">新容器</div>
+      <ul id="list">
+        <li>item 1</li>
+        <li>item 2</li>
+        <li>item 3</li>
+      </ul>
+    </div>
+    <!-- 节点关系 -->
+    <script>
+      const dom = document.querySelector("#app");
+      console.log(dom.nodeType === Node.ELEMENT_NODE);
+      console.log(dom.nodeName, dom.nodeValue);
+      console.log(dom.parentNode); // 父
+      console.log(
+        dom.hasChildNodes,
+        dom.childNodes,
+        dom.firstChild,
+        dom.lastChild
+      ); // 子
+      console.log(dom.nextSibling, dom.previousSibling); // 兄弟
+    </script>
+    <!-- 操作节点 -->
+    <script>
+      // appendChild新节点
+      {
+        const newNode = document.createElement("p");
+        newNode.innerText = "NewNode";
+        const dom = document.getElementById("modify");
+        const returnNode = dom.appendChild(newNode);
+        console.log(returnNode === newNode);
+      }
+      // appendChild老节点
+      {
+        setTimeout(() => {
+          const newNode = document.getElementById("original");
+          const dom = document.getElementById("modify");
+          const returnNode = dom.appendChild(newNode);
+          console.log(returnNode === newNode);
+        }, 1000);
+      }
+      // insertBefore
+      {
+        setTimeout(() => {
+          const beforeNode = document.getElementById("original");
+          const newNode = document.createElement("p");
+          newNode.innerText = "插入节点";
+          const dom = document.getElementById("modify");
+          const returnNode = dom.insertBefore(newNode, beforeNode);
+          console.log(returnNode === newNode);
+        }, 3000);
+      }
+      // replaceChild
+      {
+        setTimeout(() => {
+          const newNode = document.createElement("p");
+          newNode.innerText = "替换节点";
+          const dom = document.getElementById("modify");
+          const returnNode = dom.replaceChild(newNode, dom.lastChild);
+          console.log(returnNode, newNode); // returnNode为被替换的节点
+        }, 5000);
+      }
+      // removeChild
+      {
+        const text = document.createTextNode(" Click again.");
+        setTimeout(() => {
+          const dom = document.getElementById("modify");
+          const toRemove = dom.lastChild;
+          const returnNode = dom.removeChild(toRemove);
+          console.log(returnNode === toRemove);
+        }, 7000);
+      }
+    </script>
+    <!-- cloneNode -->
+    <script>
+      {
+        const listDom = document.getElementById("list");
+        const deepList = listDom.cloneNode(true);
+        const shadowList = listDom.cloneNode(false);
+        console.log(
+          "deep",
+          deepList,
+          deepList.children.length,
+          "shadow",
+          shadowList,
+          shadowList.children.length
+        );
+        const dom = document.querySelector("#app");
+        dom.appendChild(deepList);
+        // dom.appendChild(shadowList);
+      }
+    </script>
+    <!-- normalize -->
+    <script>
+      {
+        const dom = document.querySelector("#app");
+        dom.appendChild(document.createTextNode(" Click again."));
+        dom.appendChild(document.createTextNode(" Click again."));
+        dom.appendChild(document.createTextNode(" Click again."));
+        console.log("nodes length", dom.childNodes.length);
+        setTimeout(() => {
+          const dom = document.querySelector("#app");
+          dom.normalize();
+          console.log("nodes length", dom.childNodes.length);
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>
